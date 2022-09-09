@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -8,29 +9,60 @@ import {
 import styles from "./index.module.scss";
 
 export const RegisterForm = () => {
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  console.log(errors);
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <InputContainer>
         <InputLabel htmlFor="email">Email</InputLabel>
-        <InputField type="email" id="email" />
+        <InputField
+          type="email"
+          id="email"
+          {...register("email", {
+            required: "Email is required",
+          })}
+        />
       </InputContainer>
       <section className={styles.nameFieldRow}>
         <InputContainer>
           <InputLabel htmlFor="firstname">First Name</InputLabel>
-          <InputField type="text" id="firstname" />
+          <InputField
+            type="text"
+            id="firstname"
+            {...register("firstname", {
+              required: "First name is required",
+            })}
+          />
         </InputContainer>
         <InputContainer>
           <InputLabel htmlFor="lastname">Last Name</InputLabel>
-          <InputField type="text" id="lastname" />
+          <InputField
+            type="text"
+            id="lastname"
+            {...register("lastname", {
+              required: "Last name is required",
+            })}
+          />
         </InputContainer>
       </section>
       <InputContainer>
         <InputLabel htmlFor="password">Password</InputLabel>
-        <InputField type="password" id="password" />
+        <InputField
+          type="password"
+          id="password"
+          {...register("password", {
+            required: "Password is required",
+          })}
+        />
       </InputContainer>
       <Button className={styles.button}>Create Account</Button>
       <div className={styles.footerText}>
